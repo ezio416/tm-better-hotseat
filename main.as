@@ -445,27 +445,27 @@ string TimeRepresentation(const string&in sTime) {
 }
 
 void FixFolders() {
-	string pathToDoc = "";
-	string[] splitline = IO::FromDataFolder("").Split("/");
-	scriptInput = splitline[0];
-	if (pathToDocuments == "" or not IO::FolderExists(pathToDocuments)) {
-		if (IO::FolderExists(splitline[0] + "\\Documents\\Trackmania2020")) {
-			pathToDoc = splitline[0] + "\\Documents\\Trackmania2020";
-		} else if (IO::FolderExists(splitline[0] + "\\Documents\\Trackmania")) {
-			pathToDoc = splitline[0] + "\\Documents\\Trackmania";
-		} else if (IO::FolderExists(splitline[0] + "\\OneDrive\\Documents\\Trackmania2020")) {
-			pathToDoc = splitline[0] + "\\OneDrive\\Documents\\Trackmania2020";
-		} else if (IO::FolderExists(splitline[0] + "\\OneDrive\\Documents\\Trackmania")) {
-			pathToDoc = splitline[0] + "\\OneDrive\\Documents\\Trackmania";
-		} else {
-			print("ERROR: Documents folder where trackmania data is located could not be found, please manually fill this in in Openplanets settings.");
-		}
-		pathToDocuments = pathToDoc;
-	} else {
-		pathToDoc = pathToDocuments;
-	}
-	
-	
+	string pathToDoc = IO::FromUserGameFolder("");
+	// string[] splitline = IO::FromDataFolder("").Split("/");
+	// scriptInput = splitline[0];
+	// if (pathToDocuments == "" or not IO::FolderExists(pathToDocuments)) {
+	// 	if (IO::FolderExists(splitline[0] + "\\Documents\\Trackmania2020")) {
+	// 		pathToDoc = splitline[0] + "\\Documents\\Trackmania2020";
+	// 	} else if (IO::FolderExists(splitline[0] + "\\Documents\\Trackmania")) {
+	// 		pathToDoc = splitline[0] + "\\Documents\\Trackmania";
+	// 	} else if (IO::FolderExists(splitline[0] + "\\OneDrive\\Documents\\Trackmania2020")) {
+	// 		pathToDoc = splitline[0] + "\\OneDrive\\Documents\\Trackmania2020";
+	// 	} else if (IO::FolderExists(splitline[0] + "\\OneDrive\\Documents\\Trackmania")) {
+	// 		pathToDoc = splitline[0] + "\\OneDrive\\Documents\\Trackmania";
+	// 	} else {
+	// 		print("ERROR: Documents folder where trackmania data is located could not be found, please manually fill this in in Openplanets settings.");
+	// 	}
+	// 	pathToDocuments = pathToDoc;
+	// } else {
+	// 	pathToDoc = pathToDocuments;
+	// }
+
+
 	pathToDoc += "\\Scripts";
 	if (!IO::FolderExists(pathToDoc)) {
 		IO::CreateFolder(pathToDoc);
