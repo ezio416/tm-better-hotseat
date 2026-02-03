@@ -70,7 +70,7 @@ void Main() {
 }
 
 void RenderMenu() {
-	if (UI::MenuItem("Better Hotseat")) {
+	if (UI::MenuItem("Better Hotseat", "", window1Visible)) {
 		loadNames();
 		CTrackMania@ app = cast<CTrackMania>(GetApp());
 		CGameMatchSettingsManagerScript@ settings = cast<CGameMatchSettingsManagerScript>(app.MenuManager.MenuCustom_CurrentManiaApp.MatchSettingsManager);
@@ -85,8 +85,8 @@ void RenderMenu() {
 void Render() {
 
     if (window1Visible) {
-        UI::SetNextWindowSize(300, 480);
-		UI::SetNextWindowPos(winX - 300,47);
+        // UI::SetNextWindowSize(300, 480);
+		// UI::SetNextWindowPos(winX - 300,47);
         UI::Begin("Better Hotseat by Trackmaniac 420", window1Visible);
 		CTrackMania@ app = cast<CTrackMania>(GetApp());
 		auto playground = app.PlaygroundScript;
@@ -136,17 +136,19 @@ void Render() {
 			
 		}
 
-        UI::End();
-		
-		UI::SetNextWindowSize(380, 100);
-		UI::SetNextWindowPos(winX - 420,900);
-		int windowparams = UI::WindowFlags::NoTitleBar | UI::WindowFlags::NoResize | UI::WindowFlags::NoCollapse;
-        UI::Begin("BHB", windowparams);
+        // UI::End();
+
+		// UI::SetNextWindowSize(380, 100);
+		// UI::SetNextWindowPos(winX - 420,900);
+		// int windowparams = UI::WindowFlags::NoTitleBar | UI::WindowFlags::NoResize | UI::WindowFlags::NoCollapse;
+        // UI::Begin("BHB", windowparams);
 		UI::PushFont(fontStart);
 		if (Permissions::PlayHotSeat() && Permissions::PlayLocalMap() && (UI::Button("Start Hotseat") or (changingMap && app.ManiaTitleControlScriptAPI.IsReady))) {
 			
 			if (maps.Length == 0) {
 				print("you have to select maps in the local network tab before starting! See Plugin description");
+				UI::PopFont();
+				UI::End();
 				return;
 			}
 			is_playing = true;
@@ -201,8 +203,8 @@ void Render() {
 	
 	
 	if (window2Visible) {
-        UI::SetNextWindowSize(300, 430);
-		UI::SetNextWindowPos(winX - 300,200,UI::Cond::Always);
+        // UI::SetNextWindowSize(300, 430);
+		// UI::SetNextWindowPos(winX - 300,200,UI::Cond::Always);
         UI::Begin("Better Hotseat - Local Records", window2Visible);
 		
 		auto playground = app.PlaygroundScript;
