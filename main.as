@@ -428,7 +428,7 @@ void restartCurrentMap() {
 
 
 // Method for converting integer time representation to human readable format
-string TimeRepresentation(string sTime) {
+string TimeRepresentation(const string&in sTime) {
     int iTime = Text::ParseInt(sTime);
     int copyTime = iTime;
     int ms = copyTime % 1000;
