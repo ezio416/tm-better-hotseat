@@ -150,7 +150,7 @@ for (Clan, 1, Clans::C_MultiClansMax) {
 }
 
 // My custom structs
-declare Integer[] MyList; 
+declare Integer[] MyList;
 MyList= [0,1,2,3,4,5,6,7];
 ***
 
@@ -264,11 +264,11 @@ if (Server_ModeState == C_ModeState_StartMatch) {
 		Player_ClearRaceWaypointTimes(Player);
 		Player_SetPlayerCurRaceAsScoreBestRace(Player);
 	}
-	
+
 	Map_BestTime = Consts::C_BestTime_None;
 	Map_BestGhost = ReleaseGhost(Map_BestGhost);
 	Map_SecondToLastGhost = ReleaseGhost(Map_SecondToLastGhost);
-	
+
 	//Reset players' data
 	foreach (PlayerID => HotSeatPlayer in Server_HotSeatPlayers) {
 		Server_HotSeatPlayers[PlayerID].EnergyAmount = Map_MaxEnergyAmount;
@@ -322,7 +322,7 @@ if (MB_RoundIsRunning()) {
 		Dossard_Number = TL::FormatInteger(Server_HotSeatPlayers[Map_CurrentRoundData.PlayerID].Rank+1, 2);
 		Dossard_Color = Clans::GetClanTrigramColor(PlayerClan);
 	}
-	
+
 	SetPlayerClan(Players[0], PlayerClan);
 	Players[0].Dossard_Trigram = Dossard_Trigram;
 	Players[0].Dossard_Number = Dossard_Number;
@@ -347,7 +347,7 @@ if (MB_RoundIsRunning()) {
 declare RacePendingEvents = Race::GetPendingEvents();
 foreach (Event in RacePendingEvents) {
 	Race::ValidEvent(Event);
-	
+
 	switch (Event.Type) {
 		case Events::C_Type_StartLine: {
 			Round_PlayerStarted = True;
@@ -359,9 +359,9 @@ foreach (Event in RacePendingEvents) {
 					Race::StopSkipScoresTable(Event.Player);
 					Round_PlayerStarted = False; //Stop the energy consumption while restarting
 					UIModules_InGame::SetPlayerStarted(False);
-										
+
 					// Stop round if beat player over them, some player still haven't raced or no energy left
-					
+
 					if (
 							Map_CurrentRoundData.TimeToBeat == Consts::C_BestTime_None ||
 							Event.RaceTime <= Map_CurrentRoundData.TimeToBeat ||
@@ -388,17 +388,17 @@ foreach (Event in RacePendingEvents) {
 							ghosts[Map_CurrentRoundData.PlayerID] = Ghost;
 						}
 					}
-					
-					
+
+
 					// Save player best time
-					if (Event.RaceTime < Server_HotSeatPlayers[Map_CurrentRoundData.PlayerID].BestTime 
-							|| Server_HotSeatPlayers[Map_CurrentRoundData.PlayerID].BestTime == Consts::C_BestTime_None					
+					if (Event.RaceTime < Server_HotSeatPlayers[Map_CurrentRoundData.PlayerID].BestTime
+							|| Server_HotSeatPlayers[Map_CurrentRoundData.PlayerID].BestTime == Consts::C_BestTime_None
 					) {
 						Server_HotSeatPlayers[Map_CurrentRoundData.PlayerID].BestTime = Event.RaceTime;
 						NetShare::SetHotSeatPlayers(Server_HotSeatPlayers);
 						UIModules_InGame::RefreshPlayers();
 					}
-					
+
 				}
 			}
 		}
@@ -448,12 +448,12 @@ if (MB_MapIsRunning() && Server_ModeState == C_ModeState_MatchLoop) {
 	if (Server_HotSeatPlayers[Map_CurrentRoundData.PlayerID].BestTime == Consts::C_BestTime_None) {
 		Server_HotSeatPlayers[Map_CurrentRoundData.PlayerID].BestTime = Consts::C_BestTime_RaceNotFinished;
 	}
-	
+
 	// Update ranking and UI
 	Server_HotSeatPlayers = UpdateRanks(Server_HotSeatPlayers);
 	NetShare::SetHotSeatPlayers(Server_HotSeatPlayers);
 	UIModules_InGame::RefreshPlayers();
-	
+
 
 	for(i, 0,S_PlayersNb-1) {
 
@@ -461,11 +461,11 @@ if (MB_MapIsRunning() && Server_ModeState == C_ModeState_MatchLoop) {
 
 			Server_HotSeatPlayers[i].EnergyAmount = ML::Max(50, Server_HotSeatPlayers[i].EnergyAmount);
 		}
-		MyList[i] = Server_HotSeatPlayers[i].Rank;			
+		MyList[i] = Server_HotSeatPlayers[i].Rank;
 	}
-		
 
-	
+
+
 	//Play end round animation
 	declare Boolean OutroFinished = False;
 	UIModules_EndRound::StartAnimation();
@@ -474,12 +474,12 @@ if (MB_MapIsRunning() && Server_ModeState == C_ModeState_MatchLoop) {
 		OutroFinished = PlayOutro();
 	}
 	UIModules_EndRound::StopAnimation();
-	
+
 	// Check end match conditions
 	Map_CurrentRoundData = GetNextRoundData(Server_HotSeatPlayers);
 	if (Map_CurrentRoundData.PlayerID == Consts::C_PlayerID_Null) Server_ModeState = C_ModeState_EndMatch;
 	else NetShare::SetCurrentPlayerID(Map_CurrentRoundData.PlayerID);
-	
+
 	// End match
 	if (Server_ModeState == C_ModeState_EndMatch) {
 		StateMgr::ForcePlayersStates([StateMgr::C_State_EndMatch]);
@@ -560,7 +560,7 @@ Boolean PlayOutro() {
 		if (Event.HasBeenPassed || Event.HasBeenDiscarded) continue;
 		Events::Invalid(Event);
 	}
-	
+
 	declare OutroFinished = True;
 	foreach (Player in AllPlayers) {
 		if (Race::IsWatchingOutro(Player)) {
@@ -571,11 +571,11 @@ Boolean PlayOutro() {
 	return OutroFinished;
 }
 
-/*	Compute the next round data : 
+/*	Compute the next round data :
  *		@param		_HotSeatPlayers		list of the players indexed by their PlayerID (an unique Integer used as a pointer to access a specific player in the array)
  *		@return											PlayerID : first player who didn't race or last player with energy left or Consts::C_PlayerID_Null if race finished
  * 																TimeToBeat : BestTime of the player directly over or Consts::C_BestTime_None if first
- */									
+ */
 K_RoundData GetNextRoundData(Structs::K_HotSeatPlayer[Integer] _HotSeatPlayers) {
 	declare NextRoundData = K_RoundData { PlayerID = Consts::C_PlayerID_Null, TimeToBeat = Consts::C_BestTime_None };
 	declare Integer NextPlayerRank = -1;
@@ -586,8 +586,8 @@ K_RoundData GetNextRoundData(Structs::K_HotSeatPlayer[Integer] _HotSeatPlayers) 
 			if (HotSeatPlayer.BestTime == Consts::C_BestTime_None && (NextRoundData.PlayerID == Consts::C_PlayerID_Null || HotSeatPlayer.Rank < NextPlayerRank)) {
 				NextRoundData.PlayerID = PlayerID;
 				NextPlayerRank = HotSeatPlayer.Rank;
-			}	
-		} 
+			}
+		}
 	} else {
 		// Last player with energy left
 		foreach (PlayerID => HotSeatPlayer in _HotSeatPlayers) {
