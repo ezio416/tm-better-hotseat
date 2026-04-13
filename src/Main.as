@@ -150,7 +150,7 @@ void Render() {
             changingMap = false;
             if (oneShot) multiplier=0;
             IO::File file(scriptOutput + "\\Hotseat.Script.txt");
-            IO::FileSource file2("GhostHotseatTest.Script.txt");
+            IO::FileSource file2("assets/GhostHotseatTest.Script.txt");
             file.Open(IO::FileMode::Write);
             // REMOVE FROM OP FILE
             //file2.Open(IO::FileMode::Read);
