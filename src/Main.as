@@ -70,7 +70,7 @@ void Main() {
 }
 
 void RenderMenu() {
-    if (UI::MenuItem("Better Hotseat", "", window1Visible)) {
+    if (UI::MenuItem(Icons::Kenney::GamepadAlt + " Better Hotseat", "", window1Visible)) {
         loadNames();
         CTrackMania@ app = cast<CTrackMania>(GetApp());
         CGameMatchSettingsManagerScript@ settings = cast<CGameMatchSettingsManagerScript>(app.MenuManager.MenuCustom_CurrentManiaApp.MatchSettingsManager);
